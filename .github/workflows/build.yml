@@ -109,26 +109,25 @@ jobs:
         buildtype: [debug]
     runs-on: ${{ matrix.os }}
     name: macOS-${{ matrix.arch }}-${{ matrix.libtype }}
-    runs-on:
     steps:
-    - name: Install Meson and macOS Deps
-      run: |
-        brew update
-        brew install meson ninja
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Meson Setup Build
-      run: meson setup builddir --buildtype=${{ matrix.buildtype }} --default-library=${{ matrix.libtype }}
-    - name: Ninja Build
-      run: ninja -C builddir --verbose
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: macOS-${{ matrix.arch }}-${{ matrix.libtype }}-${{ matrix.buildtype }}
-        # lib + header + examples + test + build-log
-        path: |
-          !builddir/meson-out/*.p/
-          builddir/meson-out/*
-          ui_darwin.h
-          ui.h
-          builddir/meson-logs/*.txt
+      - name: Install Meson and macOS Deps
+        run: |
+          brew update
+          brew install meson ninja
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Meson Setup Build
+        run: meson setup builddir --buildtype=${{ matrix.buildtype }} --default-library=${{ matrix.libtype }}
+      - name: Ninja Build
+        run: ninja -C builddir --verbose
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: macOS-${{ matrix.arch }}-${{ matrix.libtype }}-${{ matrix.buildtype }}
+          # lib + header + examples + test + build-log
+          path: |
+            !builddir/meson-out/*.p/
+            builddir/meson-out/*
+            ui_darwin.h
+            ui.h
+            builddir/meson-logs/*.txt
