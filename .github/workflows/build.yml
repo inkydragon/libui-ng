@@ -139,36 +139,36 @@ jobs:
             builddir/meson-out/*.exe
             builddir/meson-logs/*.txt
 
-  meson-macos:
-    strategy:
-      fail-fast: false
-      matrix:
-        # macos-latest (macos-10.15), macos-11
-        os: [macos-11]
-        libtype: [static, shared]
-        # debug, debugoptimized, release
-        buildtype: [debug]
-    runs-on: ${{ matrix.os }}
-    name: macOS-x64-${{ matrix.libtype }}
-    steps:
-      - name: Install Meson and macOS Deps
-        run: |
-          brew update
-          brew install meson ninja
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Meson Setup Build
-        run: meson setup builddir --buildtype=${{ matrix.buildtype }} --default-library=${{ matrix.libtype }}
-      - name: Ninja Build
-        run: ninja -C builddir --verbose
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: macOS-x64-${{ matrix.libtype }}-${{ matrix.buildtype }}
-          # lib + header + examples + test + build-log
-          path: |
-            !builddir/meson-out/*.p/
-            builddir/meson-out/*
-            ui_darwin.h
-            ui.h
-            builddir/meson-logs/*.txt
+  # meson-macos:
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       # macos-latest (macos-10.15), macos-11
+  #       os: [macos-11]
+  #       libtype: [static, shared]
+  #       # debug, debugoptimized, release
+  #       buildtype: [debug]
+  #   runs-on: ${{ matrix.os }}
+  #   name: macOS-x64-${{ matrix.libtype }}
+  #   steps:
+  #     - name: Install Meson and macOS Deps
+  #       run: |
+  #         brew update
+  #         brew install meson ninja
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+  #     - name: Meson Setup Build
+  #       run: meson setup builddir --buildtype=${{ matrix.buildtype }} --default-library=${{ matrix.libtype }}
+  #     - name: Ninja Build
+  #       run: ninja -C builddir --verbose
+  #     - name: Upload artifacts
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: macOS-x64-${{ matrix.libtype }}-${{ matrix.buildtype }}
+  #         # lib + header + examples + test + build-log
+  #         path: |
+  #           !builddir/meson-out/*.p/
+  #           builddir/meson-out/*
+  #           ui_darwin.h
+  #           ui.h
+  #           builddir/meson-logs/*.txt
