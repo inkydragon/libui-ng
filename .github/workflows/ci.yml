@@ -13,9 +13,10 @@ jobs:
       fail-fast: false
       matrix:
         os: [windows-latest]
+        arch: [x86, x64]
         libtype: [static, shared]
-    runs-on: ${{matrix.os}}
-    name: Win-${{matrix.libtype}}
+    runs-on: ${{ matrix.os }}
+    name: Win${{ matrix.arch }}-${{ matrix.libtype }}
     steps:
       # Setup build env
       - uses: actions/checkout@v2
@@ -28,6 +29,8 @@ jobs:
           pip install meson ninja
       - name: Setup MSVC
         uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: ${{ matrix.arch }}
 
       - name: Build
         shell: cmd
@@ -42,7 +45,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ jobs.windows-build.name }}
+          name: ${{ job.name }}
           path: |
             builddir/meson-logs/*.txt
             builddir/meson-out/*.exe
