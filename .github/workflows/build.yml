@@ -106,7 +106,7 @@ jobs:
         # only support static
         libtype: [static]
         # debug, debugoptimized, release
-        buildtype: [debug]
+        buildtype: [release]
     runs-on: ${{ matrix.os }}
     name: Mingw-${{ matrix.arch }}-${{ matrix.libtype }}
     defaults:
@@ -134,8 +134,7 @@ jobs:
           name: Mingw-${{ matrix.arch }}-static-${{ matrix.buildtype }}
           # lib + header + examples + test + build-log
           path: |
-            !builddir/meson-out/*.p/
-            builddir/meson-out/libui.*
+            builddir/meson-out/libui.a
             ui_windows.h
             ui.h
             builddir/meson-out/*.exe
