@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [windows-latest]
-        libtype: [shared]
+        libtype: [static, shared]
     runs-on: ${{matrix.os}}
     name: Win-${{matrix.libtype}}
     steps:
@@ -44,7 +44,7 @@ jobs:
         with:
           name: ${{ jobs.windows-build.name }}
           path: |
-            builddir/meson-logs/*.log
+            builddir/meson-logs/*.txt
             builddir/meson-out/*.exe
             builddir/meson-out/*.pdb
             builddir/meson-out/libui.*
