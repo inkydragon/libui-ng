@@ -42,7 +42,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.config.name }}
+          name: ${{ runner.name }}
           path: |
             builddir/meson-logs/*.log
             builddir/meson-out/*.exe
