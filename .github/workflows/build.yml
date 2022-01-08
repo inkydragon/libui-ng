@@ -120,7 +120,7 @@ jobs:
           install: >-
             base-devel
             git
-            meson
+          pacboy: meson:x
       - uses: actions/checkout@v2
       - name: Meson Setup Build
         run: meson setup builddir --buildtype=${{ matrix.buildtype }} --default-library=static
