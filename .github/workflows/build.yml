@@ -98,7 +98,18 @@ jobs:
             builddir/meson-logs/*.txt
 
   meson-macos:
-    runs-on: macos-11
+    strategy:
+      fail-fast: false
+      matrix:
+        # macos-latest (macos-10.15), macos-11
+        os: [macos-11]
+        arch: [x86, x64]
+        libtype: [static, shared]
+        # debug, debugoptimized, release
+        buildtype: [debug]
+    runs-on: ${{ matrix.os }}
+    name: macOS-${{ matrix.arch }}-${{ matrix.libtype }}
+    runs-on:
     steps:
     - name: Install Meson and macOS Deps
       run: |
@@ -107,6 +118,17 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Meson Setup Build
-      run: meson setup build
+      run: meson setup builddir --buildtype=${{ matrix.buildtype }} --default-library=${{ matrix.libtype }}
     - name: Ninja Build
-      run: ninja -C build
+      run: ninja -C builddir --verbose
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: macOS-${{ matrix.arch }}-${{ matrix.libtype }}-${{ matrix.buildtype }}
+        # lib + header + examples + test + build-log
+        path: |
+          !builddir/meson-out/*.p/
+          builddir/meson-out/*
+          ui_darwin.h
+          ui.h
+          builddir/meson-logs/*.txt
