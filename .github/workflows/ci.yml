@@ -48,3 +48,4 @@ jobs:
             builddir/meson-out/*.exe
             builddir/meson-out/*.pdb
             builddir/meson-out/libui.*
+            !builddir/meson-out/*.p/
