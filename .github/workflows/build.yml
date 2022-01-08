@@ -103,12 +103,11 @@ jobs:
       matrix:
         # macos-latest (macos-10.15), macos-11
         os: [macos-11]
-        arch: [x86, x64]
         libtype: [static, shared]
         # debug, debugoptimized, release
         buildtype: [debug]
     runs-on: ${{ matrix.os }}
-    name: macOS-${{ matrix.arch }}-${{ matrix.libtype }}
+    name: macOS-x64-${{ matrix.libtype }}
     steps:
       - name: Install Meson and macOS Deps
         run: |
@@ -123,7 +122,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: macOS-${{ matrix.arch }}-${{ matrix.libtype }}-${{ matrix.buildtype }}
+          name: macOS-x64-${{ matrix.libtype }}-${{ matrix.buildtype }}
           # lib + header + examples + test + build-log
           path: |
             !builddir/meson-out/*.p/
