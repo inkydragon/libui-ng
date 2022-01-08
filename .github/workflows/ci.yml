@@ -12,11 +12,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # windows-latest, windows-2022
         os: [windows-latest]
         arch: [x86, x64]
         libtype: [static, shared]
+        # debug, debugoptimized, release
+        buildtype: [debug]
     runs-on: ${{ matrix.os }}
-    name: Win${{ matrix.arch }}-${{ matrix.libtype }}
+    name: Win-${{ matrix.arch }}-${{ matrix.libtype }}
     steps:
       # Setup build env
       - uses: actions/checkout@v2
@@ -35,7 +38,7 @@ jobs:
       - name: Build
         shell: cmd
         run: |
-          meson setup builddir --buildtype=debug --default-library=${{matrix.libtype}}
+          meson setup builddir --buildtype=${{ matrix.buildtype }} --default-library=${{ matrix.libtype }}
           ninja -C builddir --verbose
 
       # TODO: Add test
@@ -45,7 +48,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ job.name }}
+          name: Win-${{ matrix.arch }}-${{ matrix.libtype }}-${{ matrix.buildtype }}
           path: |
             builddir/meson-logs/*.txt
             builddir/meson-out/*.exe
