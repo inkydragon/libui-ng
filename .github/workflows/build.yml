@@ -40,9 +40,7 @@ jobs:
         name: Ubuntu-${{ matrix.arch }}-${{ matrix.libtype }}-${{ matrix.buildtype }}
         # lib + header + examples + test + build-log
         path: |
-          !builddir/meson-out/*@exe/
-          !builddir/meson-out/*@sta/
-          !builddir/meson-out/*@sha/
+          !builddir/meson-out/*.p/
           builddir/meson-out/*
           ui_unix.h
           ui.h
