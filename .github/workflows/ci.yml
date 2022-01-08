@@ -49,9 +49,12 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Win-${{ matrix.arch }}-${{ matrix.libtype }}-${{ matrix.buildtype }}
+          # lib + header + examples + test + build-log
           path: |
-            builddir/meson-logs/*.txt
+            !builddir/meson-out/*.p/
+            builddir/meson-out/libui.*
+            ui_windows.h
+            ui.h
             builddir/meson-out/*.exe
             builddir/meson-out/*.pdb
-            builddir/meson-out/libui.*
-            !builddir/meson-out/*.p/
+            builddir/meson-logs/*.txt
