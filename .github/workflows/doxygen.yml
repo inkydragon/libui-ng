@@ -13,7 +13,7 @@ jobs:
     - name: Check out Doxygen theme
       uses: actions/checkout@v2
       with:
-        repository: https://github.com/jothepro/doxygen-awesome-css.git
+        repository: jothepro/doxygen-awesome-css
         path: libui-ng/doc/
     - name: Doxygen Action
       uses: mattnotmitt/doxygen-action@v1
