@@ -10,6 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Check out Doxygen theme
+      uses: actions/checkout@v2
+      repository: https://github.com/jothepro/doxygen-awesome-css.git
+      path: libui-ng/doc/
     - name: Doxygen Action
       uses: mattnotmitt/doxygen-action@v1
       with:
