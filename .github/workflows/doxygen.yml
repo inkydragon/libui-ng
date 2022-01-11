@@ -2,7 +2,7 @@ name: Auto build and deploy doc
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, doc-dev ]
 
 
 jobs:
